@@ -6,13 +6,14 @@ const AddMovie = ({ getData }) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [newMovie, setnewMovie] = useState({});
+  const [newMovie, setNewMovie] = useState({});
   const handleInput = (e) => {
-    setnewMovie({ ...newMovie, [e.target.name]: e.target.value });
+    setNewMovie({ ...newMovie, [e.target.name]: e.target.value });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     getData(newMovie);
+    handleClose();
   };
 
   return (

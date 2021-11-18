@@ -5,7 +5,6 @@ const MovieCard = ({ movie }) => {
   return (
     <div>
       <h5>{movie.movieName}</h5>
-      <p>{movie.movieRating}</p>
       <img src={movie.movieImg} />
       <StarRatingComponent
         name="rate2"

@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import MovieList from "./components/MovieList";
 import AddMovie from "./components/AddMovie";
 import { useState } from "react";
+import Filter from "./components/Filter";
 
 const movies = [
   {
@@ -40,13 +41,31 @@ const movies = [
 ];
 function App() {
   const [movieList, setMovieList] = useState(movies);
-  const getData = (Info) => {
-    setMovieList([...MovieList, Info]);
+  const [searchInput, setsearchInput] = useState("");
+  const [star, setstar] = useState(0);
+  const getData = (info) => {
+    setMovieList([...movieList, info]);
   };
+  const FilterIn = (info) => {
+    setsearchInput(info);
+  };
+  const filterStar = (info) => {
+    setstar(info);
+  };
+
   return (
     <div className="App">
       <AddMovie getData={getData} />
-      <MovieList movies={movieList} />
+      <Filter FilterIn={FilterIn} filterStar={filterStar} />
+      <MovieList
+        movies={
+          movieList.filter((movie) =>
+            movie.movieName
+              .toLowerCase()
+              .includes(searchInput.toLowerCase().trim())
+          ) && movieList.filter((movie) => movie.movieRating >= star)
+        }
+      />
     </div>
   );
 }
