@@ -46,25 +46,26 @@ function App() {
   const getData = (info) => {
     setMovieList([...movieList, info]);
   };
-  const FilterIn = (info) => {
-    setsearchInput(info);
-  };
-  const filterStar = (info) => {
-    setstar(info);
-  };
 
   return (
     <div className="App">
       <AddMovie getData={getData} />
-      <Filter FilterIn={FilterIn} filterStar={filterStar} />
+      <Filter setsearchInput={setsearchInput} setstar={setstar} />
       <MovieList
-        movies={
-          movieList.filter((movie) =>
-            movie.movieName
-              .toLowerCase()
-              .includes(searchInput.toLowerCase().trim())
-          ) && movieList.filter((movie) => movie.movieRating >= star)
-        }
+        movies={movieList.filter((movie) =>
+          searchInput && star
+            ? movie.movieName
+                .toLowerCase()
+                .includes(searchInput.toLowerCase().trim()) &&
+              movie.movieRating === star
+            : searchInput
+            ? movie.movieName
+                .toLowerCase()
+                .includes(searchInput.toLowerCase().trim())
+            : star
+            ? movie.movieRating === star
+            : movie
+        )}
       />
     </div>
   );
